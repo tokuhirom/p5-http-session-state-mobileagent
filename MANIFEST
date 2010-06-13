@@ -1,5 +1,6 @@
 .gitignore
 Changes
+inc/HTTP/Response.pm
 inc/Module/Install.pm
 inc/Module/Install/AuthorTests.pm
 inc/Module/Install/Base.pm
@@ -12,6 +13,7 @@ inc/Module/Install/ReadmeMarkdownFromPod.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 inc/Pod/Markdown.pm
+inc/Test/Exception.pm
 inc/Test/More.pm
 inc/YAML.pm
 lib/HTTP/Session/State/MobileAgentID.pm
@@ -20,6 +22,7 @@ MANIFEST			This list of files
 META.yml
 README.mkdn
 t/00_compile.t
+t/01_simple.t
 xt/01_podspell.t
 xt/02_perlcritic.t
 xt/03_pod.t
