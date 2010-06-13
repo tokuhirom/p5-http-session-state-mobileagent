@@ -13,5 +13,4 @@ readme_markdown_from 'lib/HTTP/Session/State/MobileAgentID.pm';
 tests 't/*.t t/*/*.t t/*/*/*.t t/*/*/*/*.t';
 test_requires 'Test::More';
 author_tests('xt');
-auto_include;
 WriteAll;
