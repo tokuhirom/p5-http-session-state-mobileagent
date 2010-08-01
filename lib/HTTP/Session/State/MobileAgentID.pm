@@ -5,7 +5,7 @@ use 5.00800;
 our $VERSION = '0.41';
 
 use HTTP::Session::State::Base;
-use HTTP::MobileAgent;
+use HTTP::MobileAgent 0.28;
 use Net::CIDR::MobileJP;
 
 __PACKAGE__->mk_ro_accessors(qw/mobile_agent check_ip cidr/);
@@ -24,23 +24,13 @@ sub new {
     bless {%args}, $class;
 }
 
-sub _get_id {
-    my ($ma, ) = @_;
-    my $key = {
-        'V' => 'x-jphone-uid',
-        'E' => 'x-up-subno',
-        'I' => 'x-dcmguid',
-    }->{$ma->carrier};
-    return $ma->get_header($key);
-}
-
 sub get_session_id {
     my ($self, $req) = @_;
 
     my $ma = $self->mobile_agent;
     Carp::croak "this module only supports docomo/softbank/ezweb" unless $ma->is_docomo || $ma->is_softbank || $ma->is_ezweb;
 
-    my $id = _get_id($ma);
+    my $id = $ma->user_id();
     if ($id) {
         if ($self->check_ip) {
             my $ip = $ENV{REMOTE_ADDR} || (Scalar::Util::blessed($req) ? $req->address : $req->{REMOTE_ADDR}) || die "cannot get client ip address";
