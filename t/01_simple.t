@@ -10,6 +10,8 @@ use HTTP::Response;
 
 plan tests => 5;
 
+my $cidr = Net::CIDR::MobileJP->new('t/data/cidr.yaml');
+
 sub {
     local %ENV = (
         HTTP_USER_AGENT => 'DoCoMo/1.0/D504i/c10/TJ',
@@ -19,6 +21,7 @@ sub {
         state => HTTP::Session::State::MobileAgentID->new(
             mobile_agent => HTTP::MobileAgent->new(),
             check_ip => 0,
+            cidr     => $cidr,
         ),
         store   => HTTP::Session::Store::Test->new(),
         request => CGI->new(),
@@ -37,6 +40,7 @@ sub {
         state => HTTP::Session::State::MobileAgentID->new(
             mobile_agent => HTTP::MobileAgent->new(),
             check_ip => 0,
+            cidr     => $cidr,
         ),
         store   => HTTP::Session::Store::Test->new(),
         request => CGI->new(),
@@ -56,6 +60,7 @@ sub {
         HTTP::Session->new(
             state => HTTP::Session::State::MobileAgentID->new(
                 mobile_agent => HTTP::MobileAgent->new(),
+                cidr     => $cidr,
             ),
             store   => HTTP::Session::Store::Test->new(),
             request => CGI->new(),
@@ -70,6 +75,7 @@ sub {
     my $state = HTTP::Session::State::MobileAgentID->new(
         mobile_agent => HTTP::MobileAgent->new(),
         check_ip     => 0,
+        cidr     => $cidr,
     );
     throws_ok { $state->get_session_id() } qr/cannot detect mobile id/;
 }->();
@@ -81,6 +87,7 @@ sub {
     my $state = HTTP::Session::State::MobileAgentID->new(
         mobile_agent => HTTP::MobileAgent->new(),
         check_ip     => 0,
+        cidr     => $cidr,
     );
     throws_ok { $state->get_session_id() } qr{this module only supports docomo/softbank/ezweb};
 }->();
