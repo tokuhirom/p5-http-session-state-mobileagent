@@ -1,5 +1,9 @@
 Revision history for Perl extension HTTP::Session::State::MobileAgentID
 
+0.44
+
+        - doc enhancements(no feacure changes)
+
 0.43
 
         - fixed testing issue(no feature changes)

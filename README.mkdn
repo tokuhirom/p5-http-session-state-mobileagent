@@ -27,6 +27,12 @@ instance of [HTTP::MobileAgent](http://search.cpan.org/perldoc?HTTP::MobileAgent
 check the IP address in the carrier's cidr/ or not?
 see also [Net::CIDR::MobileJP](http://search.cpan.org/perldoc?Net::CIDR::MobileJP)
 
+- cidr
+
+The object have __get_carrier($ip)__ method like [Net::CIDR::MobileJP](http://search.cpan.org/perldoc?Net::CIDR::MobileJP).
+
+If not provided to constructor, this class create new instance of Net::CIDR::MobileJP automatically.
+
 # AUTHOR
 
 Tokuhiro Matsuno <tokuhirom AAJKLFJEF GMAIL COM>
