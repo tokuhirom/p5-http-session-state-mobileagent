@@ -83,6 +83,12 @@ instance of L<HTTP::MobileAgent>
 check the IP address in the carrier's cidr/ or not?
 see also L<Net::CIDR::MobileJP>
 
+=item cidr
+
+The object have B<get_carrier($ip)> method like L<Net::CIDR::MobileJP>.
+
+If not provided to constructor, this class create new instance of Net::CIDR::MobileJP automatically.
+
 =back
 
 =head1 AUTHOR
