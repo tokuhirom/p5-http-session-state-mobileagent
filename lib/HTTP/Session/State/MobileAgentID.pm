@@ -40,7 +40,9 @@ sub get_session_id {
         }
         return $id;
     } else {
-        die "cannot detect mobile id from: $ma";
+        my $ip = $ENV{REMOTE_ADDR} || (Scalar::Util::blessed($req) ? $req->address : $req->{REMOTE_ADDR}) || 'UNKNOWN';
+        my $ua = $ma->user_agent();
+        die "cannot detect mobile id from: ($ua, $ip)";
     }
 }
 
