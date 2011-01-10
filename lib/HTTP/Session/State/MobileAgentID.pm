@@ -2,7 +2,7 @@ package HTTP::Session::State::MobileAgentID;
 use strict;
 use warnings;
 use 5.00800;
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 
 use HTTP::Session::State::Base;
 use HTTP::MobileAgent 0.28;
