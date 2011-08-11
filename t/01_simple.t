@@ -7,8 +7,9 @@ use HTTP::Session::Store::Test;
 use CGI;
 use HTTP::Session::State::MobileAgentID;
 use HTTP::Response;
+use HTTP::Request;
 
-plan tests => 5;
+plan tests => 6;
 
 my $cidr = Net::CIDR::MobileJP->new('t/data/cidr.yaml');
 
@@ -90,4 +91,15 @@ sub {
         cidr     => $cidr,
     );
     throws_ok { $state->get_session_id() } qr{this module only supports docomo/softbank/ezweb};
+}->();
+
+sub {
+    my $state = HTTP::Session::State::MobileAgentID->new(
+        check_ip => 0,
+    );
+    my $h = HTTP::Headers->new;
+    $h->header( 'User-Agent' => 'DoCoMo/1.0/D504i/c10/TJ' );
+    $h->header( 'X-DCMGUID' => 'fooobar' );
+    my $r = HTTP::Request->new( 'GET', '/', $h );
+    is $state->get_session_id( $r ), 'fooobar';
 }->();
