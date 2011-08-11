@@ -2,22 +2,20 @@ package HTTP::Session::State::MobileAgentID;
 use strict;
 use warnings;
 use 5.00800;
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 
 use HTTP::Session::State::Base;
 use HTTP::MobileAgent 0.28;
 use Net::CIDR::MobileJP;
 
-__PACKAGE__->mk_ro_accessors(qw/mobile_agent check_ip cidr/);
+__PACKAGE__->mk_accessors(qw/mobile_agent/);
+__PACKAGE__->mk_ro_accessors(qw/check_ip cidr/);
 
 sub new {
     my $class = shift;
     my %args = ref($_[0]) ? %{$_[0]} : @_;
-    # check required parameters
-    for (qw/mobile_agent/) {
-        Carp::croak "missing parameter $_" unless $args{$_};
-    }
     # set default values
+    $args{mobile_agent} = exists($args{mobile_agent}) ? $args{mobile_agent} : undef;
     $args{check_ip} = exists($args{check_ip}) ? $args{check_ip} : 1;
     $args{permissive} = exists($args{permissive}) ? $args{permissive} : 1;
     $args{cidr}       = exists($args{cidr}) ? $args{cidr} : Net::CIDR::MobileJP->new();
@@ -26,7 +24,9 @@ sub new {
 
 sub get_session_id {
     my ($self, $req) = @_;
-
+    unless (defined $self->mobile_agent) {
+        $self->mobile_agent(HTTP::MobileAgent->new($req->headers));
+    }
     my $ma = $self->mobile_agent;
     Carp::croak "this module only supports docomo/softbank/ezweb" unless $ma->is_docomo || $ma->is_softbank || $ma->is_ezweb;
 
